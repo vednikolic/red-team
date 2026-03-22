@@ -39,7 +39,7 @@ Use these consistently, with judgment applied to context:
 
 ---
 
-## Step 1: Input Type Detection
+## Step 1: Detect the Input Type
 
 State the detected input type at the top of every output. Use judgment for hybrids.
 
@@ -56,7 +56,7 @@ State the detected input type at the top of every output. Use judgment for hybri
 
 ---
 
-## Step 2: Agent Selection
+## Step 2: Select Active Agents
 
 Each "agent" is a disciplinary perspective, not a separate process. If your environment supports parallel execution, run each agent as a separate task. Otherwise, work through them sequentially.
 
@@ -78,7 +78,7 @@ List active agents at the top of the output.
 
 ---
 
-## Step 3: Adversarial Analysis
+## Step 3: Generate Adversarial Findings
 
 For each active agent, generate 2 to 5 findings. Skip an agent entirely rather than producing weak findings. If you skip, say why.
 
@@ -91,6 +91,22 @@ Attack: The specific assumption or claim being challenged -- one sentence, no he
 Grounding: Why this is a real risk. Reference specifics from the input, not hypotheticals.
 Worst case: What happens if this is wrong and goes unaddressed.
 Confidence: HIGH / MEDIUM / LOW -- and if MEDIUM or LOW, state what information would raise it.
+```
+
+**Confidence criteria:**
+- **HIGH**: The risk is grounded in specific evidence drawn directly from the input. The attack vector is well-documented in the domain and the input contains the triggering condition.
+- **MEDIUM**: The risk is plausible but depends on assumptions not stated in the input. State which assumptions you are making and what evidence would confirm or refute them.
+- **LOW**: The risk is theoretical or requires external context not available in the input. Flag it only if the worst-case impact is severe enough to warrant tracking despite low confidence.
+
+**Example finding:**
+
+```
+Engineering | HIGH | ADDRESSABLE
+
+Attack: The spec assumes real-time sync across devices but does not address conflict resolution when two devices edit the same record offline.
+Grounding: The architecture section specifies "eventual consistency" but the product requirements describe "instant sync" -- these are contradictory. No conflict resolution strategy is mentioned anywhere in the document.
+Worst case: Users lose data silently when concurrent edits resolve unpredictably, destroying trust in the product's reliability claim.
+Confidence: HIGH -- the contradiction between "eventual consistency" and "instant sync" is explicit in the document, and conflict resolution is a well-documented failure mode for offline-first architectures.
 ```
 
 ---
@@ -140,7 +156,7 @@ Text expansion breaking layouts, RTL language support not considered, date, numb
 
 ---
 
-## Step 4: Synthesis
+## Step 4: Synthesize and Prioritize Findings
 
 After all agent findings, produce this synthesis block:
 
