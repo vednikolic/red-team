@@ -13,6 +13,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 WORKSPACE_ROOT="${WORKSPACE_ROOT:-$HOME/claude}"
 WORKSPACE_SKILL="$WORKSPACE_ROOT/.claude/skills/red-team/SKILL.md"
+WORKSPACE_AGENTS="$WORKSPACE_ROOT/.claude/skills/red-team/references/agents.md"
 
 if [ ! -d "$WORKSPACE_ROOT" ]; then
     echo "ERROR: Workspace not found at $WORKSPACE_ROOT"
@@ -24,11 +25,21 @@ case "${1:-}" in
     pull)
         echo "Pulling from workspace -> standalone repo"
         cp "$WORKSPACE_SKILL" "$SCRIPT_DIR/.claude/skills/red-team/SKILL.md"
+        if [ -f "$WORKSPACE_AGENTS" ]; then
+            mkdir -p "$SCRIPT_DIR/.claude/skills/red-team/references"
+            mkdir -p "$SCRIPT_DIR/references"
+            cp "$WORKSPACE_AGENTS" "$SCRIPT_DIR/.claude/skills/red-team/references/agents.md"
+            cp "$WORKSPACE_AGENTS" "$SCRIPT_DIR/references/agents.md"
+        fi
         echo "Done. Review changes with: git diff"
         ;;
     push)
         echo "Pushing from standalone repo -> workspace"
         cp "$SCRIPT_DIR/.claude/skills/red-team/SKILL.md" "$WORKSPACE_SKILL"
+        if [ -f "$SCRIPT_DIR/.claude/skills/red-team/references/agents.md" ]; then
+            mkdir -p "$(dirname "$WORKSPACE_AGENTS")"
+            cp "$SCRIPT_DIR/.claude/skills/red-team/references/agents.md" "$WORKSPACE_AGENTS"
+        fi
         echo "Done. Review changes in workspace with: cd $WORKSPACE_ROOT && git diff"
         ;;
     *)
