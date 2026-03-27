@@ -1,8 +1,35 @@
 # Red Team
 
+<div align="center">
+
+<img src="https://img.shields.io/badge/LLM--agnostic-works%20with%20any%20model-gray?style=for-the-badge" />
+<img src="https://img.shields.io/badge/agents-12%20disciplines-DC2626?style=for-the-badge" />
+<img src="https://img.shields.io/badge/eval%20score-100%25-10B981?style=for-the-badge" />
+<img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" />
+
+</div>
+
+<br />
+
 An LLM skill that adversarially stress-tests any product artifact from multiple disciplinary perspectives. Give it a PRD, strategy doc, UX flow, business pitch, or just an idea, and it produces structured findings with severity ratings and actionable recommendations.
 
-Unlike generic "find weaknesses" prompts, Red Team activates specialized domain agents (Engineering, UXR, PMM, Privacy, Legal, Ethics, Security, Finance, Data/Analytics, Design, Ops, Localization) based on what you feed it. Each agent attacks from its domain's perspective with specific, grounded findings.
+Unlike generic "find weaknesses" prompts, Red Team activates specialized domain agents based on what you feed it. Each agent attacks from its domain's perspective with specific, grounded findings.
+
+```
+          INPUT                          RED TEAM                         OUTPUT
+          -----                          --------                         ------
+
+     +------------+          +-----------------------------+        +----------------+
+     |            |          |  12 Domain Agents           |        |  Findings      |
+     |  PRD       |          |                             |        |                |
+     |  Strategy  |  ------> |  Engineering    Privacy     | -----> |  BLOCKING (2)  |
+     |  UX Flow   |          |  UXR           Legal        |        |  HIGH (4)      |
+     |  Pitch     |          |  PMM           Ethics       |        |  MEDIUM (3)    |
+     |  Policy    |          |  Security      Finance      |        |  LOW (1)       |
+     |  Idea      |          |  Data          Design       |        |                |
+     |            |          |  Ops           Localization  |        +----------------+
+     +------------+          +-----------------------------+
+```
 
 ## What It Does
 
